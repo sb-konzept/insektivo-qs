@@ -4,10 +4,26 @@
 
 Ein MVP für das QS-Verfahren der INSEKTIVO Erzeugergemeinschaft.
 
-## 🚀 Quick Start
+## 🚀 Setup (neuer PC)
 
 ```bash
-cd app
+# 1. Repo klonen
+git clone https://github.com/sb-konzept/insektivo-qs.git
+cd insektivo-qs/app
+
+# 2. Dependencies installieren
+npm install
+
+# 3. Environment-Datei erstellen
+cp .env.example .env
+
+# 4. Datenbank erstellen + migrieren
+npx prisma migrate dev
+
+# 5. Demo-Daten laden
+npm run db:seed
+
+# 6. Starten
 npm run dev
 ```
 

@@ -8,7 +8,12 @@ async function getBoxes() {
     include: {
       bookings: {
         orderBy: { createdAt: 'desc' },
-        take: 5,
+        take: 10,
+        include: {
+          supplier: { select: { id: true, name: true } },
+          customer: { select: { id: true, name: true } },
+          carrier: { select: { id: true, name: true } },
+        },
       },
     },
     orderBy: { updatedAt: 'desc' },

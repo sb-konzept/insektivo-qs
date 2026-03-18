@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import Link from 'next/link'
 
 type Booking = {
   id: string
@@ -9,6 +10,12 @@ type Booking = {
   createdAt: Date
   weight?: number | null
   batchNr?: string | null
+  supplierId?: string | null
+  customerId?: string | null
+  carrierId?: string | null
+  supplier?: { id: string; name: string } | null
+  customer?: { id: string; name: string } | null
+  carrier?: { id: string; name: string } | null
 }
 
 type Box = {
@@ -129,28 +136,65 @@ export default function BoxList({ initialBoxes }: { initialBoxes: Box[] }) {
                         {box.bookings.map(booking => (
                           <div
                             key={booking.id}
-                            className="flex items-center justify-between bg-white p-3 rounded-lg text-sm"
+                            className="bg-white p-3 rounded-lg text-sm"
                           >
-                            <div className="flex items-center gap-3">
-                              <span className="text-[#4a4a49]/50">
-                                {new Date(booking.createdAt).toLocaleDateString('de-DE', {
-                                  day: '2-digit',
-                                  month: '2-digit',
-                                  year: '2-digit',
-                                  hour: '2-digit',
-                                  minute: '2-digit',
-                                })}
-                              </span>
-                              <span className="font-medium text-[#3c7460]">
-                                {stationLabels[booking.station] || booking.station}
-                              </span>
-                              <span className="text-[#4a4a49]/70">
-                                {bookingTypeLabels[booking.bookingType] || booking.bookingType}
-                              </span>
+                            <div className="flex items-center justify-between mb-2">
+                              <div className="flex items-center gap-3">
+                                <span className="text-[#4a4a49]/50">
+                                  {new Date(booking.createdAt).toLocaleDateString('de-DE', {
+                                    day: '2-digit',
+                                    month: '2-digit',
+                                    year: '2-digit',
+                                    hour: '2-digit',
+                                    minute: '2-digit',
+                                  })}
+                                </span>
+                                <span className="font-medium text-[#3c7460]">
+                                  {stationLabels[booking.station] || booking.station}
+                                </span>
+                                <span className="px-2 py-0.5 bg-[#b3c43e]/20 text-[#3c7460] rounded text-xs font-medium">
+                                  {bookingTypeLabels[booking.bookingType] || booking.bookingType}
+                                </span>
+                              </div>
+                              <div className="text-[#4a4a49]/70">
+                                {booking.weight && `${booking.weight.toFixed(1)} kg`}
+                                {booking.batchNr && (
+                                  <span className="ml-2 font-mono text-xs bg-gray-100 px-2 py-0.5 rounded">
+                                    {booking.batchNr}
+                                  </span>
+                                )}
+                              </div>
                             </div>
-                            <div className="text-[#4a4a49]/70">
-                              {booking.weight && `${booking.weight} kg`}
-                              {booking.batchNr && ` | Charge: ${booking.batchNr}`}
+                            
+                            {/* Clickable Links */}
+                            <div className="flex flex-wrap gap-2 mt-2">
+                              {booking.supplier && (
+                                <Link 
+                                  href={`/suppliers/${booking.supplier.id}`}
+                                  className="inline-flex items-center gap-1 px-2 py-1 bg-[#3c7460]/10 hover:bg-[#3c7460]/20 text-[#3c7460] rounded text-xs font-medium transition"
+                                  onClick={(e) => e.stopPropagation()}
+                                >
+                                  🏭 {booking.supplier.name}
+                                </Link>
+                              )}
+                              {booking.customer && (
+                                <Link 
+                                  href={`/customers/${booking.customer.id}`}
+                                  className="inline-flex items-center gap-1 px-2 py-1 bg-[#b3c43e]/20 hover:bg-[#b3c43e]/30 text-[#3c7460] rounded text-xs font-medium transition"
+                                  onClick={(e) => e.stopPropagation()}
+                                >
+                                  🏢 {booking.customer.name}
+                                </Link>
+                              )}
+                              {booking.carrier && (
+                                <Link 
+                                  href={`/carriers/${booking.carrier.id}`}
+                                  className="inline-flex items-center gap-1 px-2 py-1 bg-gray-100 hover:bg-gray-200 text-[#4a4a49] rounded text-xs font-medium transition"
+                                  onClick={(e) => e.stopPropagation()}
+                                >
+                                  🚛 {booking.carrier.name}
+                                </Link>
+                              )}
                             </div>
                           </div>
                         ))}

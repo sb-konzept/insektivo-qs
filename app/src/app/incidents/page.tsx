@@ -91,7 +91,9 @@ export default async function IncidentsPage() {
                           {incident.incidentType === 'lieferanten_rueckruf' ? 'Lieferanten-Rückruf' : 'Kunden-Reklamation'}
                         </span>
                       </div>
-                      <h3 className="text-lg font-semibold text-[#4a4a49]">{incident.title}</h3>
+                      <Link href={`/incidents/${incident.id}`} className="text-lg font-semibold text-[#4a4a49] hover:text-[#3c7460] hover:underline">
+                        {incident.title}
+                      </Link>
                       <p className="text-[#4a4a49]/80 mt-1">{incident.description}</p>
                       
                       {/* Betroffene Charge - klickbar */}
@@ -125,12 +127,20 @@ export default async function IncidentsPage() {
                         </div>
                       )}
                     </div>
-                    <Link
-                      href={`/incidents/${incident.id}/export`}
-                      className="px-4 py-2 bg-[#3c7460]/10 text-[#3c7460] rounded-lg hover:bg-[#3c7460]/20 transition text-sm font-medium whitespace-nowrap ml-4"
-                    >
-                      📥 QS-Export
-                    </Link>
+                    <div className="flex gap-2 ml-4">
+                      <Link
+                        href={`/incidents/${incident.id}`}
+                        className="px-4 py-2 bg-[#b3c43e]/20 text-[#3c7460] rounded-lg hover:bg-[#b3c43e]/30 transition text-sm font-medium whitespace-nowrap"
+                      >
+                        ✏️ Bearbeiten
+                      </Link>
+                      <Link
+                        href={`/incidents/${incident.id}/export`}
+                        className="px-4 py-2 bg-[#3c7460]/10 text-[#3c7460] rounded-lg hover:bg-[#3c7460]/20 transition text-sm font-medium whitespace-nowrap"
+                      >
+                        📥 Export
+                      </Link>
+                    </div>
                   </div>
 
                   {/* Steps */}

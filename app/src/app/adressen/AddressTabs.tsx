@@ -164,12 +164,18 @@ function SupplierTable({ suppliers }: { suppliers: Supplier[] }) {
                 <span className="font-mono text-xs text-[#4a4a49]">{s.qsId}</span>
               )}
             </td>
-            <td className="px-4 py-3">
+            <td className="px-4 py-3 flex gap-2">
               <Link
-                href={`/suppliers/${s.id}`}
+                href={`/adressen/bearbeiten/lieferanten/${s.id}`}
                 className="px-3 py-1 text-sm text-[#3c7460] hover:bg-[#3c7460]/10 rounded transition"
               >
-                Details →
+                ✏️ Bearbeiten
+              </Link>
+              <Link
+                href={`/suppliers/${s.id}`}
+                className="px-3 py-1 text-sm text-[#4a4a49]/70 hover:bg-gray-100 rounded transition"
+              >
+                Details
               </Link>
             </td>
           </tr>
@@ -229,12 +235,18 @@ function CustomerTable({ customers }: { customers: Customer[] }) {
                 <span className="font-mono text-xs text-[#4a4a49]">{c.qsId}</span>
               )}
             </td>
-            <td className="px-4 py-3">
+            <td className="px-4 py-3 flex gap-2">
               <Link
-                href={`/customers/${c.id}`}
+                href={`/adressen/bearbeiten/kunden/${c.id}`}
                 className="px-3 py-1 text-sm text-[#3c7460] hover:bg-[#3c7460]/10 rounded transition"
               >
-                Details →
+                ✏️ Bearbeiten
+              </Link>
+              <Link
+                href={`/customers/${c.id}`}
+                className="px-3 py-1 text-sm text-[#4a4a49]/70 hover:bg-gray-100 rounded transition"
+              >
+                Details
               </Link>
             </td>
           </tr>
@@ -292,12 +304,18 @@ function CarrierTable({ carriers }: { carriers: Carrier[] }) {
                 <span className="font-mono text-xs text-[#4a4a49]">{c.qsId}</span>
               )}
             </td>
-            <td className="px-4 py-3">
+            <td className="px-4 py-3 flex gap-2">
               <Link
-                href={`/carriers/${c.id}`}
+                href={`/adressen/bearbeiten/speditionen/${c.id}`}
                 className="px-3 py-1 text-sm text-[#3c7460] hover:bg-[#3c7460]/10 rounded transition"
               >
-                Details →
+                ✏️ Bearbeiten
+              </Link>
+              <Link
+                href={`/carriers/${c.id}`}
+                className="px-3 py-1 text-sm text-[#4a4a49]/70 hover:bg-gray-100 rounded transition"
+              >
+                Details
               </Link>
             </td>
           </tr>

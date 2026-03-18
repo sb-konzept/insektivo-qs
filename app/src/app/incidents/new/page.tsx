@@ -2,6 +2,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { prisma } from '@/lib/db'
 import NewIncidentForm from './NewIncidentForm'
+import BackButton from '@/components/BackButton'
 
 async function getBatches() {
   // Alle einzigartigen Chargennummern holen
@@ -21,6 +22,7 @@ export default async function NewIncidentPage() {
     <main className="min-h-screen bg-gradient-to-br from-red-50 to-orange-50">
       <header className="bg-white shadow-sm border-b border-red-200">
         <div className="max-w-7xl mx-auto px-4 py-4 flex items-center gap-4">
+          <BackButton />
           <Link href="/incidents">
             <Image 
               src="/logo.jpg" 

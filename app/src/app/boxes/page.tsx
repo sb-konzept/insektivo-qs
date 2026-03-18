@@ -2,6 +2,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { prisma } from '@/lib/db'
 import BoxList from './BoxList'
+import BackButton from '@/components/BackButton'
 
 async function getBoxes() {
   return prisma.box.findMany({
@@ -28,6 +29,7 @@ export default async function BoxesPage() {
       <header className="bg-white shadow-sm border-b border-[#3c7460]/20">
         <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
           <div className="flex items-center gap-4">
+            <BackButton />
             <Link href="/">
               <Image 
                 src="/logo.jpg" 

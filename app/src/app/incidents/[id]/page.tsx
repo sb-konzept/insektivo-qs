@@ -3,6 +3,7 @@ import Image from 'next/image'
 import { prisma } from '@/lib/db'
 import { notFound } from 'next/navigation'
 import IncidentSteps from './IncidentSteps'
+import BackButton from '@/components/BackButton'
 
 async function getIncident(id: string) {
   const incident = await prisma.incident.findUnique({
@@ -45,6 +46,7 @@ export default async function IncidentDetailPage({ params }: { params: Promise<{
       <header className="bg-white shadow-sm border-b border-red-200">
         <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
           <div className="flex items-center gap-4">
+            <BackButton />
             <Link href="/incidents">
               <Image 
                 src="/logo.jpg" 

@@ -2,6 +2,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { prisma } from '@/lib/db'
 import BookingForm from './BookingForm'
+import BackButton from '@/components/BackButton'
 
 async function getData() {
   const [boxes, suppliers, customers, carriers] = await Promise.all([
@@ -20,6 +21,7 @@ export default async function BookingPage() {
     <main className="min-h-screen bg-gradient-brand">
       <header className="bg-white shadow-sm border-b border-[#3c7460]/20">
         <div className="max-w-7xl mx-auto px-4 py-4 flex items-center gap-4">
+          <BackButton />
           <Link href="/">
             <Image 
               src="/logo.jpg" 

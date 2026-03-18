@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import { prisma } from '@/lib/db'
+import BackButton from '@/components/BackButton'
 
 async function getIncidents() {
   const incidents = await prisma.incident.findMany({
@@ -41,6 +42,7 @@ export default async function IncidentsPage() {
       <header className="bg-white shadow-sm border-b border-red-200">
         <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
           <div className="flex items-center gap-4">
+            <BackButton />
             <Link href="/">
               <Image 
                 src="/logo.jpg" 

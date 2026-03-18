@@ -2,6 +2,7 @@ import Link from 'next/link'
 import { prisma } from '@/lib/db'
 import { notFound } from 'next/navigation'
 import PrintButton from './PrintButton'
+import BackButton from '@/components/BackButton'
 
 async function getExportData(incidentId: string) {
   const incident = await prisma.incident.findUnique({
@@ -53,9 +54,7 @@ export default async function ExportPage({ params }: { params: Promise<{ id: str
       <header className="bg-[#3c7460] text-white print:hidden">
         <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <Link href="/incidents" className="text-white/70 hover:text-white">
-              ← Zurück
-            </Link>
+            <BackButton variant="dark" />
             <h1 className="text-xl font-bold">QS-Export</h1>
           </div>
           <PrintButton />

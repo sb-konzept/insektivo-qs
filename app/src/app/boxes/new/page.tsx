@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
+import BackButton from '@/components/BackButton'
 
 export default function NewBoxPage() {
   const router = useRouter()
@@ -46,9 +47,7 @@ export default function NewBoxPage() {
     <main className="min-h-screen bg-gradient-brand">
       <header className="bg-white shadow-sm border-b border-[#3c7460]/20">
         <div className="max-w-7xl mx-auto px-4 py-4 flex items-center gap-3">
-          <Link href="/boxes" className="text-[#4a4a49]/70 hover:text-[#3c7460]">
-            ← Zurück
-          </Link>
+          <BackButton />
           <div className="w-10 h-10 bg-[#3c7460] rounded-lg flex items-center justify-center">
             <span className="text-white text-xl">📦</span>
           </div>

@@ -39,6 +39,9 @@ export default async function Home() {
             <Link href="/boxes" className="px-4 py-2 text-sm font-medium text-[#4a4a49] hover:text-[#3c7460] transition">
               Kisten
             </Link>
+            <Link href="/adressen" className="px-4 py-2 text-sm font-medium text-[#4a4a49] hover:text-[#3c7460] transition">
+              📋 Adressen
+            </Link>
             <Link href="/booking" className="px-4 py-2 text-sm font-medium text-white bg-secondary rounded-lg hover:bg-secondary-dark transition">
               + Buchung
             </Link>

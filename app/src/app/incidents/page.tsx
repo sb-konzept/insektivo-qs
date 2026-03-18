@@ -3,7 +3,7 @@ import Image from 'next/image'
 import { prisma } from '@/lib/db'
 
 async function getIncidents() {
-  return prisma.incident.findMany({
+  const incidents = await prisma.incident.findMany({
     include: {
       steps: {
         orderBy: { stepNr: 'asc' },
@@ -11,6 +11,26 @@ async function getIncidents() {
     },
     orderBy: { createdAt: 'desc' },
   })
+
+  // Für jeden Incident die betroffenen Kisten laden
+  const incidentsWithBoxes = await Promise.all(
+    incidents.map(async (incident) => {
+      let affectedBoxes: { id: string; code: string }[] = []
+      
+      if (incident.affectedBatchNr) {
+        const bookings = await prisma.booking.findMany({
+          where: { batchNr: incident.affectedBatchNr },
+          include: { box: { select: { id: true, code: true } } },
+          distinct: ['boxId'],
+        })
+        affectedBoxes = bookings.map(b => b.box)
+      }
+      
+      return { ...incident, affectedBoxes }
+    })
+  )
+
+  return incidentsWithBoxes
 }
 
 export default async function IncidentsPage() {
@@ -56,7 +76,7 @@ export default async function IncidentsPage() {
               <div key={incident.id} className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
                 <div className="p-5">
                   <div className="flex items-start justify-between">
-                    <div>
+                    <div className="flex-1">
                       <div className="flex items-center gap-3 mb-2">
                         <span className={`px-3 py-1 rounded-full text-sm font-medium ${
                           incident.status === 'offen' ? 'bg-red-100 text-red-700' :
@@ -73,15 +93,41 @@ export default async function IncidentsPage() {
                       </div>
                       <h3 className="text-lg font-semibold text-[#4a4a49]">{incident.title}</h3>
                       <p className="text-[#4a4a49]/80 mt-1">{incident.description}</p>
+                      
+                      {/* Betroffene Charge - klickbar */}
                       {incident.affectedBatchNr && (
-                        <p className="text-sm text-[#4a4a49]/70 mt-2">
-                          Betroffene Charge: <span className="font-mono font-medium text-[#3c7460]">{incident.affectedBatchNr}</span>
-                        </p>
+                        <div className="mt-3 flex items-center gap-2">
+                          <span className="text-sm text-[#4a4a49]/70">Betroffene Charge:</span>
+                          <Link
+                            href={`/batches/${incident.affectedBatchNr}`}
+                            className="inline-flex items-center gap-1 px-2 py-1 bg-red-100 hover:bg-red-200 text-red-700 rounded text-sm font-mono font-medium transition"
+                          >
+                            🏷️ {incident.affectedBatchNr}
+                          </Link>
+                        </div>
+                      )}
+
+                      {/* Betroffene Kisten - klickbar */}
+                      {incident.affectedBoxes.length > 0 && (
+                        <div className="mt-3">
+                          <span className="text-sm text-[#4a4a49]/70 mr-2">Betroffene Kisten:</span>
+                          <div className="inline-flex flex-wrap gap-2 mt-1">
+                            {incident.affectedBoxes.map(box => (
+                              <Link
+                                key={box.id}
+                                href={`/boxes/${box.id}`}
+                                className="inline-flex items-center gap-1 px-2 py-1 bg-[#3c7460]/10 hover:bg-[#3c7460]/20 text-[#3c7460] rounded text-sm font-mono font-medium transition"
+                              >
+                                📦 {box.code}
+                              </Link>
+                            ))}
+                          </div>
+                        </div>
                       )}
                     </div>
                     <Link
                       href={`/incidents/${incident.id}/export`}
-                      className="px-4 py-2 bg-[#3c7460]/10 text-[#3c7460] rounded-lg hover:bg-[#3c7460]/20 transition text-sm font-medium"
+                      className="px-4 py-2 bg-[#3c7460]/10 text-[#3c7460] rounded-lg hover:bg-[#3c7460]/20 transition text-sm font-medium whitespace-nowrap ml-4"
                     >
                       📥 QS-Export
                     </Link>

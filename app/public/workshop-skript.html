@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>INSEKTIVO QS – Workshop-Präsentation</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { 
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      line-height: 1.6;
+      color: #4a4a49;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 40px 20px;
+    }
+    h1 { color: #3c7460; font-size: 28px; margin-bottom: 10px; }
+    h2 { color: #3c7460; font-size: 20px; margin-top: 30px; margin-bottom: 15px; border-bottom: 2px solid #b3c43e; padding-bottom: 5px; }
+    h3 { color: #3c7460; font-size: 16px; margin-top: 20px; margin-bottom: 10px; }
+    p { margin-bottom: 12px; }
+    blockquote { 
+      background: #f5f5f5; 
+      border-left: 4px solid #3c7460; 
+      padding: 12px 16px; 
+      margin: 15px 0;
+      font-style: italic;
+    }
+    ul, ol { margin-left: 25px; margin-bottom: 15px; }
+    li { margin-bottom: 6px; }
+    strong { color: #3c7460; }
+    code { background: #e8f0ec; padding: 2px 6px; border-radius: 3px; font-size: 14px; }
+    hr { border: none; border-top: 1px solid #ddd; margin: 30px 0; }
+    .header { text-align: center; margin-bottom: 30px; padding-bottom: 20px; border-bottom: 3px solid #3c7460; }
+    .meta { color: #666; font-size: 14px; }
+    .tip-box { background: #e8f0ec; border: 1px solid #3c7460; border-radius: 8px; padding: 15px; margin: 20px 0; }
+    .tip-box h3 { margin-top: 0; }
+    @media print {
+      body { padding: 20px; }
+      h2 { page-break-after: avoid; }
+      blockquote { page-break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="header">
+  <h1>🦗 INSEKTIVO QS</h1>
+  <p style="font-size: 20px; color: #3c7460;">Workshop-Präsentation</p>
+  <p class="meta">Dauer: ca. 20-30 Minuten | Ziel: MVP vorstellen, Feedback sammeln</p>
+</div>
+
+<h2>1. EINSTIEG (2 Min)</h2>
+
+<blockquote>
+  "Stellt euch vor: Ein Kunde meldet ein Problem mit einer Charge Larven. Wir haben 4 Stunden Zeit, um herauszufinden: Woher kam die Ware? Wer ist betroffen? Wen müssen wir informieren?"
+</blockquote>
+
+<blockquote>
+  "Genau dafür haben wir heute einen digitalen Prototyp – unser QS-System für lückenlose Rückverfolgbarkeit."
+</blockquote>
+
+<p><strong>→ Browser öffnen: http://localhost:3000</strong></p>
+
+<hr>
+
+<h2>2. DAS PROBLEM (3 Min)</h2>
+
+<blockquote>
+  "Aktuell arbeiten wir mit Excel-Listen. Das funktioniert – aber im Krisenfall kostet es wertvolle Zeit."
+</blockquote>
+
+<p><strong>Pain Points ansprechen:</strong></p>
+<ul>
+  <li>Manuelle Suche in verschiedenen Tabellen</li>
+  <li>Keine Echtzeit-Übersicht wo welche Kiste gerade ist</li>
+  <li>Fehleranfällig bei der Dokumentation</li>
+  <li>Export für QS muss händisch zusammengestellt werden</li>
+</ul>
+
+<blockquote>
+  "Unser Ziel: Ein System, das diese Arbeit automatisiert und uns im Ernstfall sofort die richtigen Daten liefert."
+</blockquote>
+
+<hr>
+
+<h2>3. DIE LÖSUNG – LIVE-DEMO (15 Min)</h2>
+
+<h3>3.1 Prozesskette zeigen (Startseite)</h3>
+
+<blockquote>"Hier seht ihr unseren kompletten Kisten-Kreislauf auf einen Blick."</blockquote>
+
+<p><strong>Durchklicken:</strong></p>
+<ol>
+  <li>Auf Station "Erzeuger" klicken → zeigt Aktionen</li>
+  <li>Durchgehen: Befüllung → Fracht → Kunde → Wäscher → zurück</li>
+</ol>
+
+<blockquote>"Jede Station hat definierte Buchungsarten. Das System weiß immer, in welchem Zustand eine Kiste ist."</blockquote>
+
+<h3>3.2 Kisten-Übersicht (/boxes)</h3>
+
+<blockquote>"Hier sehen wir alle Kisten im System."</blockquote>
+
+<p><strong>Zeigen:</strong></p>
+<ul>
+  <li>Filter nutzen (z.B. "Gefüllt")</li>
+  <li>Eine Kiste aufklappen → Buchungshistorie</li>
+  <li>"Das ist der digitale Lebenslauf jeder Kiste."</li>
+</ul>
+
+<h3>3.3 Buchung erfassen (/booking)</h3>
+
+<blockquote>"So einfach geht eine Buchung."</blockquote>
+
+<p><strong>Live demonstrieren:</strong></p>
+<ol>
+  <li>Kiste auswählen</li>
+  <li>Station wählen (z.B. "Beim Erzeuger")</li>
+  <li>Buchungsart (z.B. "Befüllung")</li>
+  <li>Gewicht + Chargennummer eingeben</li>
+  <li>→ "Buchung erfassen"</li>
+</ol>
+
+<blockquote>"Das ersetzt den Handscanner-Prozess – oder ergänzt ihn. Die Daten landen sofort im System."</blockquote>
+
+<h3>3.4 QS-Vorfall & Export (/incidents)</h3>
+
+<blockquote>"Jetzt der wichtigste Teil: Was passiert im Krisenfall?"</blockquote>
+
+<p><strong>Zeigen:</strong></p>
+<ol>
+  <li>Offenen Vorfall anklicken</li>
+  <li>Krisenmanagement-Schritte erklären</li>
+  <li><strong>"QS-Export"</strong> klicken</li>
+</ol>
+
+<blockquote>"Mit einem Klick haben wir alles, was QS braucht:"</blockquote>
+<ul>
+  <li>Betroffene Lieferanten mit Kontaktdaten</li>
+  <li>Betroffene Kunden</li>
+  <li>Komplette Buchungskette</li>
+  <li>Krisenmanagement-Protokoll</li>
+</ul>
+
+<p><strong>→ "Drucken/PDF" zeigen</strong></p>
+
+<blockquote>"Das ist das Format, das wir bisher mühsam aus Excel zusammenstellen mussten."</blockquote>
+
+<hr>
+
+<h2>4. TECHNISCHE BASIS (2 Min)</h2>
+
+<blockquote>"Kurz zur Technik – für die, die's interessiert:"</blockquote>
+
+<ul>
+  <li><strong>Next.js</strong> – modernes Web-Framework</li>
+  <li><strong>SQLite</strong> – einfache Datenbank, später skalierbar</li>
+  <li><strong>Alles lokal</strong> – keine Cloud-Abhängigkeit erstmal</li>
+</ul>
+
+<blockquote>"Das ist ein MVP – Minimum Viable Product. Es zeigt, was möglich ist. Die Basis steht, jetzt können wir erweitern."</blockquote>
+
+<hr>
+
+<h2>5. AUSBLICK & DISKUSSION (5 Min)</h2>
+
+<blockquote>"Was fehlt noch für den Echtbetrieb?"</blockquote>
+
+<p><strong>Mögliche nächste Schritte:</strong></p>
+<ul>
+  <li>☐ Handscanner-Integration (Barcode/QR)</li>
+  <li>☐ Benutzer-Authentifizierung</li>
+  <li>☐ Paletten-Verwaltung</li>
+  <li>☐ Automatische Benachrichtigungen</li>
+  <li>☐ Mobile App für Fahrer</li>
+  <li>☐ Anbindung an bestehendes ERP</li>
+</ul>
+
+<p><strong>Fragen an die Runde:</strong></p>
+<ol>
+  <li><em>"Was ist euer wichtigstes Feature, das noch fehlt?"</em></li>
+  <li><em>"Wo seht ihr die größten Zeitfresser im aktuellen Prozess?"</em></li>
+  <li><em>"Wer würde mit dem System arbeiten – und was braucht er/sie?"</em></li>
+</ol>
+
+<hr>
+
+<h2>6. ABSCHLUSS (1 Min)</h2>
+
+<blockquote>
+  "Das war ein erster Prototyp – gebaut in einem Vormittag. Er zeigt, dass digitale Rückverfolgbarkeit kein Hexenwerk ist."
+</blockquote>
+
+<blockquote>
+  "Die Frage ist nicht ob, sondern wie schnell wir das umsetzen wollen. Ich freue mich auf euer Feedback!"
+</blockquote>
+
+<hr>
+
+<div class="tip-box">
+  <h3>💡 TIPPS FÜR DIE PRÄSENTATION</h3>
+  
+  <p><strong>Do's:</strong></p>
+  <ul>
+    <li>Langsam durch die UI klicken, Zeit zum Schauen lassen</li>
+    <li>Bei Fragen: "Guter Punkt, notieren wir für V2"</li>
+    <li>Demo-Daten sind realistisch – darauf hinweisen</li>
+  </ul>
+  
+  <p><strong>Don'ts:</strong></p>
+  <ul>
+    <li>Nicht zu technisch werden</li>
+    <li>Nicht jedes Feature erklären – Fokus auf Workflow</li>
+    <li>Bei Bugs: "Das ist ein Prototyp" 😉</li>
+  </ul>
+  
+  <p><strong>Backup:</strong></p>
+  <ul>
+    <li>Falls Server nicht läuft: <code>cd ~/clawd/projects/insektivo-qs/app && npm run dev</code></li>
+  </ul>
+</div>
+
+<p style="text-align: center; margin-top: 40px; color: #3c7460; font-size: 18px;">
+  <strong>Viel Erfolg! 🚀</strong>
+</p>
+
+</body>
+</html>

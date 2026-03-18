@@ -1,0 +1,56 @@
+@import "tailwindcss";
+
+:root {
+  --background: #ffffff;
+  --foreground: #4a4a49;
+  
+  /* Insektivo Brand Colors */
+  --primary: #3c7460;
+  --primary-light: #4d8a73;
+  --primary-dark: #2d5a4a;
+  --secondary: #b3c43e;
+  --secondary-light: #c4d45f;
+  --secondary-dark: #9ab032;
+  --text: #4a4a49;
+  --text-light: #6b6b6a;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-primary: var(--primary);
+  --color-primary-light: var(--primary-light);
+  --color-primary-dark: var(--primary-dark);
+  --color-secondary: var(--secondary);
+  --color-secondary-light: var(--secondary-light);
+  --color-secondary-dark: var(--secondary-dark);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+body {
+  background: var(--background);
+  color: var(--text);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Custom utility classes for brand colors */
+.bg-primary { background-color: #3c7460; }
+.bg-primary-light { background-color: #4d8a73; }
+.bg-primary-dark { background-color: #2d5a4a; }
+.bg-secondary { background-color: #b3c43e; }
+.bg-secondary-light { background-color: #c4d45f; }
+.text-primary { color: #3c7460; }
+.text-secondary { color: #b3c43e; }
+.text-brand { color: #4a4a49; }
+.border-primary { border-color: #3c7460; }
+.border-secondary { border-color: #b3c43e; }
+.hover\:bg-primary-dark:hover { background-color: #2d5a4a; }
+.hover\:bg-secondary-dark:hover { background-color: #9ab032; }
+.hover\:text-primary:hover { color: #3c7460; }
+.focus\:ring-primary:focus { --tw-ring-color: #3c7460; }
+
+/* Gradient backgrounds */
+.bg-gradient-brand {
+  background: linear-gradient(135deg, #e8f0ec 0%, #f4f7e8 100%);
+}

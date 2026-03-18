@@ -1,0 +1,160 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+// Kiste / Behälter
+model Box {
+  id            String    @id @default(cuid())
+  code          String    @unique // Eindeutiger Kistencode (z.B. QR/Barcode)
+  status        String    @default("leer_gereinigt") // leer_gereinigt, gefuellt, leer_verschmutzt
+  currentStation String   @default("erzeuger")
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  
+  bookings      Booking[]
+}
+
+// Buchung / Bewegung einer Kiste
+model Booking {
+  id              String    @id @default(cuid())
+  boxId           String
+  box             Box       @relation(fields: [boxId], references: [id])
+  
+  station         String    // erzeuger, fracht_kunde, kunde, fracht_waescher, waescher, fracht_erzeuger
+  bookingType     String    // zugang, abgang, befuellung, qualitaetscheck
+  
+  quantity        Float?    // Menge/Gewicht
+  unit            String?   // kg, Stück
+  weight          Float?    // Gewicht in kg
+  
+  supplierId      String?
+  supplier        Supplier? @relation(fields: [supplierId], references: [id])
+  
+  customerId      String?
+  customer        Customer? @relation(fields: [customerId], references: [id])
+  
+  carrierId       String?
+  carrier         Carrier?  @relation(fields: [carrierId], references: [id])
+  
+  deliveryNoteNr  String?   // Lieferscheinnummer
+  batchNr         String?   // Chargennummer
+  
+  qualityOk       Boolean?  // Qualitätscheck bestanden?
+  qualityNotes    String?   // Qualitätsnotizen / Ausschussmeldungen
+  
+  notes           String?
+  
+  createdAt       DateTime  @default(now())
+  createdBy       String?   // Benutzer
+}
+
+// Lieferant / Erzeuger
+model Supplier {
+  id                String    @id @default(cuid())
+  name              String    // Firma
+  contactPerson     String?   // Ansprechpartner
+  street            String?
+  zipCode           String?
+  city              String?
+  phone             String?
+  mobile            String?
+  email             String?
+  
+  productionType    String?   // z.B. Kleinsterzeuger
+  certificationSystem String? // z.B. QS, GMP+
+  qsId              String?   // QS-ID
+  locationNr        String?   // Standortnummer
+  certValidUntil    DateTime?
+  
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+  
+  bookings          Booking[]
+}
+
+// Kunde / Abnehmer
+model Customer {
+  id                String    @id @default(cuid())
+  name              String    // Firma
+  contactPerson     String?
+  street            String?
+  zipCode           String?
+  city              String?
+  state             String?   // Bundesland
+  country           String?
+  phone             String?
+  email             String?
+  
+  productionType    String?   // z.B. Landwirtschaft
+  certificationSystem String?
+  qsId              String?
+  locationNr        String?   // VVVO-Nummer
+  
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+  
+  bookings          Booking[]
+}
+
+// Spedition / Frächter
+model Carrier {
+  id                String    @id @default(cuid())
+  name              String    // Firma
+  contactPerson     String?
+  street            String?
+  zipCode           String?
+  city              String?
+  phone             String?
+  email             String?
+  
+  certificationSystem String? // z.B. GMP+
+  qsId              String?
+  certValidUntil    DateTime?
+  
+  vehicleNr         String?   // Kennzeichen
+  
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+  
+  bookings          Booking[]
+}
+
+// QS-Vorfall / Krisenfall
+model Incident {
+  id              String    @id @default(cuid())
+  title           String
+  description     String
+  incidentType    String    // lieferanten_rueckruf, kunden_reklamation
+  status          String    @default("offen") // offen, in_bearbeitung, geschlossen
+  
+  affectedBatchNr String?   // Betroffene Charge
+  affectedBoxIds  String?   // Komma-separierte Box-IDs
+  
+  reportedAt      DateTime  @default(now())
+  resolvedAt      DateTime?
+  
+  steps           IncidentStep[]
+  
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+}
+
+// Schritte im Krisenmanagement
+model IncidentStep {
+  id          String    @id @default(cuid())
+  incidentId  String
+  incident    Incident  @relation(fields: [incidentId], references: [id])
+  
+  stepNr      Int
+  title       String
+  description String?
+  result      String?
+  completedAt DateTime?
+  
+  createdAt   DateTime  @default(now())
+}

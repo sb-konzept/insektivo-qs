@@ -11,20 +11,20 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'boxId, station und bookingType erforderlich' }, { status: 400 })
     }
 
-    // Create booking
+    // Create booking (convert empty strings to null for foreign keys)
     const booking = await prisma.booking.create({
       data: {
         boxId,
         station,
         bookingType,
         weight: weight ? parseFloat(weight) : null,
-        batchNr,
-        deliveryNoteNr,
-        supplierId,
-        customerId,
-        carrierId,
+        batchNr: batchNr || null,
+        deliveryNoteNr: deliveryNoteNr || null,
+        supplierId: supplierId || null,
+        customerId: customerId || null,
+        carrierId: carrierId || null,
         qualityOk,
-        qualityNotes,
+        qualityNotes: qualityNotes || null,
       },
     })
 

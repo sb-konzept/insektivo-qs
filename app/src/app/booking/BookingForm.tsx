@@ -75,7 +75,7 @@ export default function BookingForm({ boxes, suppliers, customers, carriers }: P
     }
   }
 
-  const showSupplier = form.station === 'erzeuger' && form.bookingType === 'zugang'
+  const showSupplier = form.station === 'erzeuger' || form.station === 'waescher'
   const showCustomer = form.station === 'kunde'
   const showCarrier = form.station.startsWith('fracht')
   const showWeight = form.bookingType === 'befuellung'
@@ -198,13 +198,15 @@ export default function BookingForm({ boxes, suppliers, customers, carriers }: P
 
       {showSupplier && (
         <div>
-          <label className="block text-sm font-medium text-[#4a4a49] mb-2">Lieferant</label>
+          <label className="block text-sm font-medium text-[#4a4a49] mb-2">
+            {form.station === 'waescher' ? '🧼 Wäscher' : '🏭 Erzeuger/Lieferant'}
+          </label>
           <select
             value={form.supplierId}
             onChange={(e) => setForm({ ...form, supplierId: e.target.value })}
             className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#3c7460] text-[#4a4a49]"
           >
-            <option value="">Lieferant auswählen...</option>
+            <option value="">{form.station === 'waescher' ? 'Wäscher' : 'Erzeuger'} auswählen...</option>
             {suppliers.map((s) => (
               <option key={s.id} value={s.id}>{s.name}</option>
             ))}
